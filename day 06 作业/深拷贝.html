@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>深拷贝</title>
+  </head>
+  <body>
+    <script src="./lodash.min.js"></script>
+    <script>
+      const a = {
+        uname: '杨桑',
+        age: 18,
+        money: [1, 2, 3, 4, 5],
+        addres: {
+          dd: '东北',
+        },
+        x: undefined,
+      }
+
+      const b = {}
+
+      // 递归深拷贝方法
+      function deepClone(oldData, newData) {
+        for (const key in oldData) {
+          if (oldData[key] instanceof Array) {
+            newData[key] = []
+            deepClone(oldData[key], newData[key])
+          } else if (oldData[key] instanceof Object) {
+            newData[key] = {}
+            deepClone(oldData[key], newData[key])
+          } else {
+            newData[key] = oldData[key]
+          }
+        }
+      }
+      deepClone(a, b)
+      console.log(a)
+      b.money[1] = 99
+      console.log(b)
+
+      //JSON方法
+      // const b = JSON.parse(JSON.stringify(a))
+      // console.log(a)
+      // b.addres.dd = '哈尔滨'
+      // // 复制不了undefind
+      // console.log(b)
+
+      // lodash方法
+      // const b = _.cloneDeep(a)
+      // console.log(a)
+      // b.addres.dd = '哈尔滨'
+      // console.log(b)
+    </script>
+  </body>
+</html>
